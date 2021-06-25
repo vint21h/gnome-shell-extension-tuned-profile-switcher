@@ -1,0 +1,19 @@
+{
+  "title": "tuned-profile-switcher",
+  "name": "TuneD Profile Switcher",
+  "version": "0.0.0",
+  "description": "Displays a list of the TuneD profiles and allows to switch between them.",
+  "homepage": "https://github.com/vint21h/tuned-profile-switcher/",
+  "license": "MIT",
+  "author": "Alexei Andrushievich <vint21h@vint21h.pp.ua>",
+  "private": true,
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vint21h/tuned-profile-switcher/"
+  },
+  "devDependencies": {
+    "jshint": "2.13.0"
+  },
+  "dependencies": {}
+}

@@ -2,10 +2,16 @@
 // extension.js
 
 
-const {St, Clutter} = imports.gi;
-const Gio = imports.gi.Gio;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Main = imports.ui.main;
+const ExtensionUtils = imports.misc.extensionUtils;  // jshint ignore:line
+const Gettext = imports.gettext;  // jshint ignore:line
+const PanelMenu = imports.ui.panelMenu;  // jshint ignore:line
+const St = imports.gi.St;  // jshint ignore:line
+const Gio = imports.gi.Gio;  // jshint ignore:line
+const Main = imports.ui.main;  // jshint ignore:line
+
+const Me = ExtensionUtils.getCurrentExtension();
+const Domain = Gettext.domain(Me.metadata.uuid);
+const _ = Domain.gettext;
 
 
 /**
@@ -17,30 +23,34 @@ class Extension {
      * Init extension main class.
      */
     constructor() {
-        this.self = ExtensionUtils.getCurrentExtension();
-        this._button = new St.Bin({
-            style_class : "panel-button",
-        });
-        let icon = new St.Icon({
-            gicon: new Gio.ThemedIcon({name: "preferences-other"}),
-            // style_class: "system-status-icon",
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-        this._button.add_child(icon);
+        log(_(`Initializing ${Me.metadata.name}`));  // jshint ignore:line
+        this._indicator = null;
     }
 
     /**
      * Extension enabled/user logged in/screen unlocked event handler.
      */
     enable() {
-        Main.panel._rightBox.insert_child_at_index(this._button, 0);
+        log(_(`Enabling ${Me.metadata.name}`));  // jshint ignore:line
+        // create a panel button
+        this._indicator = new PanelMenu.Button(0.0, "", false);
+
+        // add an icon to button
+        let icon = new St.Icon({
+            gicon: new Gio.ThemedIcon({name: "system-run-symbolic"}),
+            style_class: "system-status-icon"
+        });
+        this._indicator.add_child(icon);
+        Main.panel.addToStatusArea("", this._indicator);
     }
 
     /**
      * Extension uninstalled/disabled/user logged out/screen locked event handler.
      */
     disable() {
-        Main.panel._rightBox.remove_child(this._button);
+        log(_(`Disabling ${Me.metadata.name}`));  // jshint ignore:line
+        this._indicator.destroy();
+        this._indicator = null;
     }
 }
 
@@ -48,6 +58,12 @@ class Extension {
 /**
  * Extension loaded event handler.
  */
-function init() {
+function init() {  // jshint ignore:line
+
+    "use strict";
+
+    // init translations
+    ExtensionUtils.initTranslations(Me.metadata.uuid);
+
     return new Extension();
 }
