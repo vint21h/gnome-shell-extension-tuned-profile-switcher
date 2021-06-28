@@ -2,13 +2,15 @@
 // extension.js
 
 
+"use strict";
+
+
 const ExtensionUtils = imports.misc.extensionUtils;  // jshint ignore:line
 const Gettext = imports.gettext;  // jshint ignore:line
 const PanelMenu = imports.ui.panelMenu;  // jshint ignore:line
 const St = imports.gi.St;  // jshint ignore:line
 const Gio = imports.gi.Gio;  // jshint ignore:line
 const Main = imports.ui.main;  // jshint ignore:line
-const GLib = imports.gi.GLib;  // jshint ignore:line
 
 const Me = ExtensionUtils.getCurrentExtension();
 const Domain = Gettext.domain(Me.metadata.uuid);
@@ -24,33 +26,18 @@ class Extension {
      * Init extension main class.
      */
     constructor() {
-        log(_(`Initializing ${Me.metadata.name}`));  // jshint ignore:line
+        log(_(`[${Me.metadata.name}]: initializing`));  // jshint ignore:line
         this._indicator = null;
-        this._connection = Gio.DBus.session;
-        this._title = this._connection.call(
-            "com.redhat.tuned",
-            "/Tuned",
-            "com.redhat.tuned.control",
-            "active_profile",
-            new GLib.Variant("s", "string"),
-            null,
-            Gio.DBusCallFlags.NONE,
-            -1,
-            null,
-            (connection, res) => {
-                let reply = connection.call_finish(res),
-                    value = reply.deep_unpack()[0];
-                return value.get_string()[0];
-            });
+        this._connection = Me.imports.dbus.tunedProxy;
     }
 
     /**
      * Extension enabled/user logged in/screen unlocked event handler.
      */
     enable() {
-        log(_(`Enabling ${Me.metadata.name}`));  // jshint ignore:line
+        log(_(`[${Me.metadata.name}]: enabling `));  // jshint ignore:line
         // create a panel button
-        this._indicator = new PanelMenu.Button(0.0, this._title, false);
+        this._indicator = new PanelMenu.Button(0.0, "", false);
 
         // add an icon to button
         let icon = new St.Icon({
@@ -65,7 +52,7 @@ class Extension {
      * Extension uninstalled/disabled/user logged out/screen locked event handler.
      */
     disable() {
-        log(_(`Disabling ${Me.metadata.name}`));  // jshint ignore:line
+        log(_(`[${Me.metadata.name}]: disabling`));  // jshint ignore:line
         this._indicator.destroy();
         this._indicator = null;
     }
@@ -76,8 +63,6 @@ class Extension {
  * Extension loaded event handler.
  */
 function init() {  // jshint ignore:line
-
-    "use strict";
 
     // init translations
     ExtensionUtils.initTranslations(Me.metadata.uuid);
