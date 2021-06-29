@@ -7,7 +7,9 @@
 const Gio = imports.gi.Gio;  // jshint ignore:line
 
 
-const tunedInterface = `<node name="/Tuned">
+const tunedInterface = `
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "https://specifications.freedesktop.org/dbus/introspect-latest.dtd">
+<node name="/Tuned">
   <interface name="com.redhat.tuned.control">
     <method name="active_profile">
       <arg direction="out" type="s" />
