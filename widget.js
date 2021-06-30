@@ -34,25 +34,25 @@ var TunedProfileSwitcherWidget = new Lang.Class({  // jshint ignore:line
         if (tunedProxy) {
             this._tunedProxy = tunedProxy;
             // creating widget items
-            this.layoutManager = new St.BoxLayout();
+            this.box = new St.BoxLayout();
             this.topLabel = new St.Label({
                 text: tunedProxy.active_profileSync().toString(),
                 y_expand: true,
                 y_align: Clutter.ActorAlign.CENTER
             });
-            this.autoProfileMenuItem = new PopupMenu.PopupSwitchMenuItem(_("Auto select profile"), this.getTunedMode() == Me.imports.constants.tunedModeAuto ? true : false);
+            this.autoSelectProfileMenuItem = new PopupMenu.PopupSwitchMenuItem(_("Auto select profile"), this.getTunedMode() == Me.imports.constants.tunedModeAuto ? true : false);
             this.profilesMenuItems = {};
             for (let profile in this.getTunedProfiles()) {
                 this.profilesMenuItems[profile] = new PopupMenu.PopupMenuItem(profile);
             }
 
             // assemble items by adding top label and arrow icon to layout
-            this.layoutManager.add(this.topLabel);
-            this.layoutManager.add(PopupMenu.arrowIcon(St.Side.BOTTOM));
+            this.box.add(this.topLabel);
+            this.box.add(PopupMenu.arrowIcon(St.Side.BOTTOM));
             // adding items to the panel button
             this.add_child(this.layoutManager);
             // populate menu with auto profile switcher, separator, and profiles menu items
-            this.menu.addMenuItem(this.autoProfileMenuItem);
+            this.menu.addMenuItem(this.autoSelectProfileMenuItem);
             this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
             for (let profile in this.profilesMenuItems) {
                 this.menu.addMenuItem(this.profilesMenuItems[profile]);

@@ -5,8 +5,8 @@
 "use strict";
 
 
-/* jshint unused: false */
-const tunedInterface = `
+/* jshint unused: false, varstmt: false */
+var tunedInterface = `
 <!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "https://specifications.freedesktop.org/dbus/introspect-latest.dtd">
 <node name="/Tuned">
   <interface name="com.redhat.tuned.control">
@@ -88,6 +88,6 @@ const tunedInterface = `
   </interface>
 </node>
 `;
-const getTextDomain = "tuned-profile-switcher";
-const tunedModeManual = "manual";
-const tunedModeAuto = "auto";
+var getTextDomain = "tuned-profile-switcher";
+var tunedModeManual = "manual";
+var tunedModeAuto = "auto";
