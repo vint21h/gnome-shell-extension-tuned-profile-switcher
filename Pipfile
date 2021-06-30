@@ -9,7 +9,9 @@ verify_ssl = true
 
 
 [dev-packages]
+dennis = "==0.9"
 dotenv-linter = "==0.2.0"
+polint = "==0.4"
 pre-commit-hooks = "==4.0.1"
 pre-commit = "==2.13.0"
 

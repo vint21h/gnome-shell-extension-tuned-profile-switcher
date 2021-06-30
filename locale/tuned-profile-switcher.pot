@@ -1,0 +1,21 @@
+# tuned-profile-switcher
+# locale/tuned-profile-switcher.pot
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: tuned-profile-switcher 0.0.0\n"
+"Report-Msgid-Bugs-To: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
+"POT-Creation-Date: 2021-06-30 04:09+0300\n"
+"PO-Revision-Date: 2021-06-30 04:09+0300\n"
+"Last-Translator: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
+"Language-Team: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+#: widget.js:43
+msgid "Auto select profile"
+msgstr ""

@@ -1,0 +1,55 @@
+# tuned-profile-switcher
+# .pre-commit-config.yaml
+
+
+repos:
+- repo: "local"
+  hooks:
+    - id: "polint"
+      name: "polint"
+      stages: ["commit"]
+      language: "system"
+      entry: "polint --ignore=location,unsorted --show-msg"
+      types: ["pofile"]
+      pass_filenames: true
+    - id: "dennis"
+      name: "dennis"
+      stages: ["commit"]
+      language: "system"
+      entry: "dennis-cmd lint"
+      types: ["pofile"]
+      pass_filenames: true
+    - id: "jshint"
+      name: "jshint"
+      stages: ["commit"]
+      language: "system"
+      pass_filenames: true
+      entry: "jshint --verbose"
+      types: ["javascript"]
+      exclude: "geokinesia/static/"
+    - id: "dotenv-linter"
+      name: "dotenv-linter"
+      entry: "dotenv-linter"
+      language: "system"
+      stages: ["commit"]
+      types: ["text"]
+      files: '\.env*'
+      exclude: ".envrc"
+-   repo: "https://github.com/pre-commit/pre-commit-hooks"
+    rev: "v4.0.1"
+    hooks:
+      - id: "check-added-large-files"
+        args: ["--maxkb=2048"]
+      - id: "check-ast"
+      - id: "check-case-conflict"
+      - id: "check-docstring-first"
+      - id: "check-executables-have-shebangs"
+      - id: "check-merge-conflict"
+      - id: "check-symlinks"
+      - id: "check-toml"
+      - id: "check-yaml"
+      - id: "debug-statements"
+      - id: "detect-private-key"
+      - id: "end-of-file-fixer"
+      - id: "forbid-new-submodules"
+      - id: "trailing-whitespace"

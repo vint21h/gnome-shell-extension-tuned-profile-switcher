@@ -6,11 +6,9 @@
 .*.swp
 *.pyc
 *.log
-*.pot
 *.pyo
 *.pyd
 *.pyx
-*.pyi
 __pycache__/*
 *~
 *.orig
