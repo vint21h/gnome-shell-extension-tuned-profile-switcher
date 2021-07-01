@@ -17,6 +17,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Domain = Gettext.domain(Me.imports.constants.getTextDomain);
 const _ = Domain.gettext;
 
+
 /**
  * TuneD Profile Switcher widget main class.
  */
@@ -27,64 +28,39 @@ var TunedProfileSwitcherWidget = new Lang.Class({  // jshint ignore:line
     /**
      * Widget constructor.
      *
-     * @param {imports.gi.Gio.DBusProxy|null} tunedProxy. TuneD DBus proxy class instance.
+     * @param {Me.imports.dbus.TunedProxyAdapter} tuned. TuneD DBus proxy adapter instance.
      */
-    _init: function (tunedProxy) {
+    _init: function (tuned) {
         this.parent(0, "TunedProfileSwitcherWidget", false);
-        if (tunedProxy) {
-            this._tunedProxy = tunedProxy;
-            // creating widget items
-            this.box = new St.BoxLayout();
-            this.topLabel = new St.Label({
-                text: tunedProxy.active_profileSync().toString(),
-                y_expand: true,
-                y_align: Clutter.ActorAlign.CENTER
+        this._tuned = tuned;
+        let activeProfile = this._tuned.activeProfile,
+            mode = this._tuned.mode;
+        // creating widget items
+        this.box = new St.BoxLayout();
+        this.topLabel = new St.Label({
+            text: activeProfile === null ? _("Unknown"): activeProfile,
+            y_expand: true,
+            y_align: Clutter.ActorAlign.CENTER
+        });
+        // TODO: deal with no DBus connection.
+        this.autoSelectProfileMenuItem = new PopupMenu.PopupSwitchMenuItem(_("Auto select profile"), mode === Me.imports.constants.tunedModeAuto ? true : false);
+        this.profilesMenuItems = {};
+        for (let profile of this._tuned.profiles) {
+            this.profilesMenuItems[profile] = new PopupMenu.PopupMenuItem(profile, {
+                reactive: mode === Me.imports.constants.tunedModeManual ? true : false
             });
-            this.autoSelectProfileMenuItem = new PopupMenu.PopupSwitchMenuItem(_("Auto select profile"), this.getTunedMode() == Me.imports.constants.tunedModeAuto ? true : false);
-            this.profilesMenuItems = {};
-            for (let profile in this.getTunedProfiles()) {
-                this.profilesMenuItems[profile] = new PopupMenu.PopupMenuItem(profile);
-            }
-
-            // assemble items by adding top label and arrow icon to layout
-            this.box.add(this.topLabel);
-            this.box.add(PopupMenu.arrowIcon(St.Side.BOTTOM));
-            // adding items to the panel button
-            this.add_child(this.layoutManager);
-            // populate menu with auto profile switcher, separator, and profiles menu items
-            this.menu.addMenuItem(this.autoSelectProfileMenuItem);
-            this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-            for (let profile in this.profilesMenuItems) {
-                this.menu.addMenuItem(this.profilesMenuItems[profile]);
-            }
         }
-    },
 
-    /*
-    * Detect TuneD mode.
-    *
-    * @return {bool}. TuneD mode name ["auto", "manual"].
-    */
-    getTunedMode: function () {
-        try {
-            return this._tunedProxy.profile_modeSync().toString().split(",")[0];
-        } catch (error) {
-            logError(`[${Me.metadata.name}]: error. ${error}`);  // jshint ignore:line
-            return Me.imports.constants.tunedModeManual;
-        }
-    },
-
-    /*
-    * Get TuneD profiles.
-    *
-    * @return {Array[String]}. TuneD profiles list.
-    */
-    getTunedProfiles: function () {
-        try {
-            return this._tunedProxy.profilesSync().toString().split(",");
-        } catch (error) {
-            logError(`[${Me.metadata.name}]: error. ${error}`);  // jshint ignore:line
-            return [];
+        // assemble items by adding top label and arrow icon to layout
+        this.box.add(this.topLabel);
+        this.box.add(PopupMenu.arrowIcon(St.Side.BOTTOM));
+        // adding items to the panel button
+        this.add_child(this.box);
+        // populate menu with auto profile switcher, separator, and profiles menu items
+        this.menu.addMenuItem(this.autoSelectProfileMenuItem);
+        this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+        for (let profile in this.profilesMenuItems) {
+            this.menu.addMenuItem(this.profilesMenuItems[profile]);
         }
     },
 
@@ -92,6 +68,7 @@ var TunedProfileSwitcherWidget = new Lang.Class({  // jshint ignore:line
     * Widget destructor.
     */
     destroy: function () {
+        // TODO: extend it by calling inner objects destructors.
         this.parent();
     }
 });

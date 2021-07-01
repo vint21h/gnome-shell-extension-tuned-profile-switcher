@@ -91,3 +91,5 @@ var tunedInterface = `
 var getTextDomain = "tuned-profile-switcher";
 var tunedModeManual = "manual";
 var tunedModeAuto = "auto";
+var tunedDBusName = "com.redhat.tuned";
+var tunedDBusPath = "/Tuned";

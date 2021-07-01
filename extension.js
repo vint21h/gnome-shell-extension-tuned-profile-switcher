@@ -21,8 +21,8 @@ class Extension {
      */
     constructor() {
         log(`[${Me.metadata.name}]: initializing`);  // jshint ignore:line
+        this._tuned = new Me.imports.dbus.TunedProxyAdapter();
         this._widget = null;
-        this._tunedProxy = Me.imports.dbus.tunedProxy;
     }
 
     /**
@@ -30,7 +30,7 @@ class Extension {
      */
     enable() {
         log(`[${Me.metadata.name}]: enabling`);  // jshint ignore:line
-        this._widget = new Me.imports.widget.TunedProfileSwitcherWidget(this._tunedProxy);
+        this._widget = new Me.imports.widget.TunedProfileSwitcherWidget(this._tuned);
         Main.panel.addToStatusArea("TunedProfileSwitcherWidget", this._widget);
     }
 
@@ -47,6 +47,8 @@ class Extension {
 
 /**
  * Extension loaded event handler.
+ *
+ * @ return {Extension}. Initialized extension class instance.
  */
 function init() {  // jshint ignore:line
     // init translations
