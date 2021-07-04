@@ -1,5 +1,5 @@
 // tuned-profile-switcher
-// dbus.js
+// tuned-profile-switcher@vint21h.pp.ua/dbus.js
 
 
 "use strict";

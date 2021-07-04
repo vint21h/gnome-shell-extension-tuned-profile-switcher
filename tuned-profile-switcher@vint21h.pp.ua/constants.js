@@ -1,5 +1,5 @@
 // tuned-profile-switcher
-// constants.js
+// tuned-profile-switcher@vint21h.pp.ua/constants.js
 
 
 "use strict";

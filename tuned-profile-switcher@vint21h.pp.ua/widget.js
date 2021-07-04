@@ -1,5 +1,5 @@
 // tuned-profile-switcher
-// widget.js
+// tuned-profile-switcher@vint21h.pp.ua/widget.js
 
 
 "use strict";

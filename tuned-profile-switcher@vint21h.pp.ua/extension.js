@@ -1,5 +1,5 @@
 // tuned-profile-switcher
-// extension.js
+// tuned-profile-switcher@vint21h.pp.ua/extension.js
 
 
 "use strict";

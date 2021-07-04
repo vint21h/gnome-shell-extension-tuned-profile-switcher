@@ -1,5 +1,5 @@
 # tuned-profile-switcher
-# locale/tuned-profile-switcher.pot
+# tuned-profile-switcher@vint21h.pp.ua/locale/en/LC_MESSAGES/tuned-profile-switcher.po
 #
 #, fuzzy
 msgid ""
@@ -18,4 +18,4 @@ msgstr ""
 
 #: widget.js:43
 msgid "Auto select profile"
-msgstr ""
+msgstr "Auto select profile"
