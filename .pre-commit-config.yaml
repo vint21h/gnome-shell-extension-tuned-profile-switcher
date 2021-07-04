@@ -19,14 +19,6 @@ repos:
       entry: "dennis-cmd lint"
       types: ["pofile"]
       pass_filenames: true
-    - id: "jshint"
-      name: "jshint"
-      stages: ["commit"]
-      language: "system"
-      pass_filenames: true
-      entry: "jshint --verbose"
-      types: ["javascript"]
-      exclude: "geokinesia/static/"
     - id: "dotenv-linter"
       name: "dotenv-linter"
       entry: "dotenv-linter"

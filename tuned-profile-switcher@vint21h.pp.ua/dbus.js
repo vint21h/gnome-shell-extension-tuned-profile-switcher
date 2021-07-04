@@ -5,75 +5,90 @@
 "use strict";
 
 
-const Gio = imports.gi.Gio;  // jshint ignore:line
-const ExtensionUtils = imports.misc.extensionUtils;  // jshint ignore:line
-
-const Me = ExtensionUtils.getCurrentExtension();
-
-const TunedDBusProxy = Gio.DBusProxy.makeProxyWrapper(Me.imports.constants.tunedInterface);
+const {Gio} = imports.gi,
+    ExtensionUtils = imports.misc.extensionUtils,
+    Me = ExtensionUtils.getCurrentExtension(),
+    TunedDBusProxy = Gio.DBusProxy.makeProxyWrapper(Me.imports.constants.tunedInterface);
 
 
-/*
-* TuneD DBus proxy adapter.
-*/
-class TunedProxyAdapter {  // jshint ignore:line
+/**
+ * TuneD DBus proxy adapter.
+ */
+class TunedProxyAdapter {
 
-    /*
-    * Adapter constructor.
-    *
-    * Creates DBus proxy instance.
-    */
-    constructor() {
+    /**
+     * Adapter constructor.
+     *
+     * Creates DBus proxy instance.
+     */
+    constructor () {
         try {
-            this._tunedProxy = new TunedDBusProxy(  // jshint ignore:line
+            this._tunedProxy = new TunedDBusProxy(
                 Gio.DBus.system,
                 Me.imports.constants.tunedDBusName,
                 Me.imports.constants.tunedDBusPath
             );
         } catch (error) {
-            this._tunedProxy = null;  // jshint ignore:line
-            logError(error, `[${Me.metadata.name}]: error. ${error}`);  // jshint ignore:line
+            this._tunedProxy = null; // jshint ignore:line
+            logError( // jshint ignore:line
+                error,
+                `[${Me.metadata.name}]: error. ${error}`
+            );
         }
     }
 
     /**
-    * Get TuneD active profile.
-    *
-    * @return {String|null}. TuneD active profile.
-    */
+     * Get TuneD active profile.
+     *
+     * @return {String|null}. TuneD active profile.
+     */
     get activeProfile () {
         try {
             return this._tunedProxy.active_profileSync().toString();
         } catch (error) {
-            logError(error, `[${Me.metadata.name}]: error. ${error}`);  // jshint ignore:line
+            logError( // jshint ignore:line
+                error,
+                `[${Me.metadata.name}]: error. ${error}`
+            );
             return null;
         }
+
     }
 
     /**
-    * Detect TuneD mode.
-    *
-    * @return {String|null}. TuneD mode name ["auto", "manual"].
-    */
-    get mode() {
+     * Detect TuneD mode.
+     *
+     * @return {String|null}. TuneD mode name ["auto", "manual"].
+     */
+    get mode () {
         try {
-            return this._tunedProxy.profile_modeSync().toString().split(",")[0];
+            return this._tunedProxy.profile_modeSync()
+                .toString()
+                .split(",")[0];
         } catch (error) {
-            logError(error, `[${Me.metadata.name}]: error. ${error}`);  // jshint ignore:line
+            logError( // jshint ignore:line
+                error,
+                `[${Me.metadata.name}]: error. ${error}`
+            );
             return null;
         }
     }
 
     /**
-    * Get TuneD profiles.
-    *
-    * @return {Array}. TuneD profiles list.
-    */
+     * Get TuneD profiles.
+     *
+     * @return {Array}. TuneD profiles list.
+     */
     get profiles () {
         try {
-            return this._tunedProxy.profilesSync().toString().split(",");
+            return this._tunedProxy.profilesSync()
+                .toString()
+                .split(",");
         } catch (error) {
-            logError(error, `[${Me.metadata.name}]: error. ${error}`);  // jshint ignore:line
+            logError( // jshint ignore:line
+                error,
+                `[${Me.metadata.name}]: error. ${error}`
+            );
             return [];
         }
     }
@@ -85,9 +100,11 @@ class TunedProxyAdapter {  // jshint ignore:line
         try {
             this._tunedProxy.auto_profileSync();
         } catch (error) {
-            logError(error, `[${Me.metadata.name}]: error. ${error}`);  // jshint ignore:line
+            logError( // jshint ignore:line
+                error,
+                `[${Me.metadata.name}]: error. ${error}`
+            );
         }
-
     }
 
     /**
@@ -99,7 +116,10 @@ class TunedProxyAdapter {  // jshint ignore:line
         try {
             this._tunedProxy.switch_profileSync(profile);
         } catch (error) {
-            logError(error, `[${Me.metadata.name}]: error. ${error}`);  // jshint ignore:line
+            logError( // jshint ignore:line
+                error,
+                `[${Me.metadata.name}]: error. ${error}`
+            );
         }
     }
 
@@ -108,10 +128,20 @@ class TunedProxyAdapter {  // jshint ignore:line
      *
      * @param {String} signal. Signal name to listen to.
      * @param {function} listener. Signal handler function.
-    */
+     */
     connectSignal (signal, listener) {
-        this._tunedProxy.connectSignal(signal, function(proxy, nameOwner, args) {
-            listener(proxy, nameOwner, args);
-        });
+        this._tunedProxy.connectSignal(
+            signal,
+            (proxy, nameOwner, args) => {
+
+                listener(
+                    proxy,
+                    nameOwner,
+                    args
+                );
+
+            }
+        );
     }
+
 }

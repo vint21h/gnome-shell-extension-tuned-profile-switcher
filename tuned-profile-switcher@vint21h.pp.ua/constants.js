@@ -5,7 +5,6 @@
 "use strict";
 
 
-/* jshint unused: false, varstmt: false */
 var tunedInterface = `
 <!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "https://specifications.freedesktop.org/dbus/introspect-latest.dtd">
 <node name="/Tuned">
@@ -87,9 +86,10 @@ var tunedInterface = `
     </signal>
   </interface>
 </node>
-`;
-var getTextDomain = "tuned-profile-switcher";
-var tunedModeManual = "manual";
-var tunedModeAuto = "auto";
-var tunedDBusName = "com.redhat.tuned";
-var tunedDBusPath = "/Tuned";
+`,
+    getTextDomain = "tuned-profile-switcher",
+    tunedModeManual = "manual",
+    tunedModeAuto = "auto",
+    tunedDBusName = "com.redhat.tuned",
+    tunedDBusPath = "/Tuned",
+    tunedProfileChangedSignalName = "profile_changed";

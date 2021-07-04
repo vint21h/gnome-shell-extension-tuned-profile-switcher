@@ -4,7 +4,7 @@
   "shell-version" : [
       "40.1.0"
   ],
-  "url" : "https://github.com/vint21h/tuned-profile-switcher/",
+  "url" : "https://github.com/vint21h/gnome-shell-extension-tuned-profile-switcher/",
   "uuid" : "tuned-profile-switcher@vint21h.pp.ua",
   "version" : "0.0.0"
 }
