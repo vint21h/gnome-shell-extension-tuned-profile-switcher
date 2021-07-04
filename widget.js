@@ -32,9 +32,11 @@ var TunedProfileSwitcherWidget = new Lang.Class({  // jshint ignore:line
      */
     _init: function (tuned) {
         this.parent(0, "TunedProfileSwitcherWidget", false);
+        this.profilesMenuItems = {};
         this._tuned = tuned;
         let activeProfile = this._tuned.activeProfile,
             mode = this._tuned.mode;
+
         // creating widget items
         this.box = new St.BoxLayout();
         this.topLabel = new St.Label({
@@ -42,14 +44,32 @@ var TunedProfileSwitcherWidget = new Lang.Class({  // jshint ignore:line
             y_expand: true,
             y_align: Clutter.ActorAlign.CENTER
         });
-        // TODO: deal with no DBus connection.
-        this.autoSelectProfileMenuItem = new PopupMenu.PopupSwitchMenuItem(_("Auto select profile"), mode === Me.imports.constants.tunedModeAuto ? true : false);
-        this.profilesMenuItems = {};
         for (let profile of this._tuned.profiles) {
-            this.profilesMenuItems[profile] = new PopupMenu.PopupMenuItem(profile, {
+            let profileMenuItem = new PopupMenu.PopupMenuItem(
+                profile,
+                {
                 reactive: mode === Me.imports.constants.tunedModeManual ? true : false
-            });
+                }
+            );
+            profileMenuItem.connect("activate", Lang.bind(this, function() {  // jshint ignore:line
+                this._tuned.switchProfile(profile);
+            }));
+            this.profilesMenuItems[profile] = profileMenuItem;
         }
+        this.autoSelectProfileMenuItem = new PopupMenu.PopupSwitchMenuItem(
+            _("Auto select profile"),
+            mode === Me.imports.constants.tunedModeAuto ? true : false
+        );
+        this.autoSelectProfileMenuItem.connect("toggled", Lang.bind(this, function(object, value){
+            for (let profile in this.profilesMenuItems) {
+                if (value) {
+                    this.profilesMenuItems[profile].reactive = false;
+                } else {
+                    this.profilesMenuItems[profile].reactive = true;
+                }
+            }
+            this._tuned.autoProfile();
+        }));
 
         // assemble items by adding top label and arrow icon to layout
         this.box.add(this.topLabel);
@@ -62,6 +82,10 @@ var TunedProfileSwitcherWidget = new Lang.Class({  // jshint ignore:line
         for (let profile in this.profilesMenuItems) {
             this.menu.addMenuItem(this.profilesMenuItems[profile]);
         }
+        // connect DBus event listener
+        this._tuned.connectSignal("profile_changed", (proxy, nameOwner, args) => {  // jshint ignore:line
+            this.topLabel.set_text(this._tuned.activeProfile);
+        });
     },
 
     /*

@@ -48,7 +48,7 @@ class Extension {
 /**
  * Extension loaded event handler.
  *
- * @ return {Extension}. Initialized extension class instance.
+ * @return {Extension}. Initialized extension class instance.
  */
 function init() {  // jshint ignore:line
     // init translations
