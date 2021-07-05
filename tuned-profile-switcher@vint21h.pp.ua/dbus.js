@@ -5,10 +5,10 @@
 "use strict";
 
 
-const {Gio} = imports.gi,
+const Gio = imports.gi.Gio,
     ExtensionUtils = imports.misc.extensionUtils,
-    Me = ExtensionUtils.getCurrentExtension(),
-    TunedDBusProxy = Gio.DBusProxy.makeProxyWrapper(Me.imports.constants.tunedInterface);
+    This = ExtensionUtils.getCurrentExtension(),
+    TunedDBusProxy = Gio.DBusProxy.makeProxyWrapper(This.imports.constants.tunedInterface);
 
 
 /**
@@ -25,14 +25,14 @@ class TunedProxyAdapter {
         try {
             this._tunedProxy = new TunedDBusProxy(
                 Gio.DBus.system,
-                Me.imports.constants.tunedDBusName,
-                Me.imports.constants.tunedDBusPath
+                This.imports.constants.tunedDBusName,
+                This.imports.constants.tunedDBusPath
             );
         } catch (error) {
-            this._tunedProxy = null; // jshint ignore:line
-            logError( // jshint ignore:line
+            this._tunedProxy = null;
+            logError(
                 error,
-                `[${Me.metadata.name}]: error. ${error}`
+                `[${This.metadata.name}]: error. ${error}`
             );
         }
     }
@@ -46,9 +46,9 @@ class TunedProxyAdapter {
         try {
             return this._tunedProxy.active_profileSync().toString();
         } catch (error) {
-            logError( // jshint ignore:line
+            logError(
                 error,
-                `[${Me.metadata.name}]: error. ${error}`
+                `[${This.metadata.name}]: error. ${error}`
             );
             return null;
         }
@@ -66,9 +66,9 @@ class TunedProxyAdapter {
                 .toString()
                 .split(",")[0];
         } catch (error) {
-            logError( // jshint ignore:line
+            logError(
                 error,
-                `[${Me.metadata.name}]: error. ${error}`
+                `[${This.metadata.name}]: error. ${error}`
             );
             return null;
         }
@@ -85,9 +85,9 @@ class TunedProxyAdapter {
                 .toString()
                 .split(",");
         } catch (error) {
-            logError( // jshint ignore:line
+            logError(
                 error,
-                `[${Me.metadata.name}]: error. ${error}`
+                `[${This.metadata.name}]: error. ${error}`
             );
             return [];
         }
@@ -100,9 +100,9 @@ class TunedProxyAdapter {
         try {
             this._tunedProxy.auto_profileSync();
         } catch (error) {
-            logError( // jshint ignore:line
+            logError(
                 error,
-                `[${Me.metadata.name}]: error. ${error}`
+                `[${This.metadata.name}]: error. ${error}`
             );
         }
     }
@@ -116,9 +116,9 @@ class TunedProxyAdapter {
         try {
             this._tunedProxy.switch_profileSync(profile);
         } catch (error) {
-            logError( // jshint ignore:line
+            logError(
                 error,
-                `[${Me.metadata.name}]: error. ${error}`
+                `[${This.metadata.name}]: error. ${error}`
             );
         }
     }
@@ -143,5 +143,4 @@ class TunedProxyAdapter {
             }
         );
     }
-
 }

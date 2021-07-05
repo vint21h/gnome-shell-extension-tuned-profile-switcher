@@ -7,7 +7,7 @@
 
 const ExtensionUtils = imports.misc.extensionUtils,
     Main = imports.ui.main,
-    Me = ExtensionUtils.getCurrentExtension();
+    This = ExtensionUtils.getCurrentExtension();
 
 
 /**
@@ -18,8 +18,8 @@ class Extension {
      * Init extension main class.
      */
     constructor () {
-        log(`[${Me.metadata.name}]: initializing`); // jshint ignore:line
-        this._tuned = new Me.imports.dbus.TunedProxyAdapter();
+        log(`[${This.metadata.name}]: initializing`);
+        this._tuned = new This.imports.dbus.TunedProxyAdapter();
         this._widget = null;
     }
 
@@ -27,8 +27,8 @@ class Extension {
      * Extension enabled/user logged in/screen unlocked event handler.
      */
     enable () {
-        log(`[${Me.metadata.name}]: enabling`); // jshint ignore:line
-        this._widget = new Me.imports.widget.TunedProfileSwitcherWidget(this._tuned);
+        log(`[${This.metadata.name}]: enabling`);
+        this._widget = new This.imports.widget.TunedProfileSwitcherWidget(this._tuned);
         Main.panel.addToStatusArea(
             "TunedProfileSwitcherWidget",
             this._widget
@@ -39,7 +39,7 @@ class Extension {
      * Extension uninstalled/disabled/user logged out/screen locked event handler.
      */
     disable () {
-        log(`[${Me.metadata.name}]: disabling`); // jshint ignore:line
+        log(`[${This.metadata.name}]: disabling`);
         this._widget.destroy();
         this._widget = null;
     }
@@ -53,6 +53,6 @@ class Extension {
  */
 function init() {
     // init translations
-    ExtensionUtils.initTranslations(Me.imports.constants.getTextDomain);
+    ExtensionUtils.initTranslations(This.imports.constants.getTextDomain);
     return new Extension();
 }
