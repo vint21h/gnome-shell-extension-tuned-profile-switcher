@@ -1,5 +1,5 @@
 # tuned-profile-switcher
-# tuned-profile-switcher@vint21h.pp.ua/locale/uk/LC_MESSAGES/tuned-profile-switcher.po
+# tuned-profile-switcher@vint21h.pp.ua/locale/uk_UA/LC_MESSAGES/tuned-profile-switcher.po
 #
 #, fuzzy
 msgid ""
