@@ -6,6 +6,6 @@
   ],
   "url": "https://github.com/vint21h/gnome-shell-extension-tuned-profile-switcher/",
   "uuid": "tuned-profile-switcher@vint21h.pp.ua",
-  "version": 0,
+  "version": 1,
   "gettext-domain": "tuned-profile-switcher"
 }
