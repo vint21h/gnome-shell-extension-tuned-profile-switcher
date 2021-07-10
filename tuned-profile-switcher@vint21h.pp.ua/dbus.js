@@ -37,6 +37,12 @@ class TunedProxyAdapter {
         }
     }
 
+    destroy() {
+        if (this._tunedProxy) {
+            this._tunedProxy = null;
+        }
+    }
+
     /**
      * Get TuneD active profile.
      *

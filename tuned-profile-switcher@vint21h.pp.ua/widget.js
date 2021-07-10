@@ -80,7 +80,11 @@ var TunedProfileSwitcherWidget = GObject.registerClass({
                             this.profilesMenuItems[profile].item.reactive = true;
                         }
                     }
-                    this._tuned.autoProfile();
+                    if (value) {
+                        this._tuned.autoProfile();
+                    } else {
+                        this._tuned.switchProfile(this._tuned.activeProfile);
+                    }
                 }
             );
 
@@ -104,7 +108,9 @@ var TunedProfileSwitcherWidget = GObject.registerClass({
                     nameOwner,
                     args
                 ) => {
-                    this.topLabel.set_text(this._tuned.activeProfile);
+                    if (this.topLabel) {  // preventing unreferenced object call
+                        this.topLabel.text = this._tuned.activeProfile;
+                    }
                 }
             );
 
@@ -115,21 +121,31 @@ var TunedProfileSwitcherWidget = GObject.registerClass({
          */
         destroy () {
             // auto select profile menu item
-            this.autoSelectProfileMenuItem.disconnect(this.autoSelectProfileMenuItemSignal);
-            this.autoSelectProfileMenuItemSignal = null;
-            this.autoSelectProfileMenuItem.destroy();
-            this.autoSelectProfileMenuItem = null;
+            if (this.autoSelectProfileMenuItem) {
+                this.autoSelectProfileMenuItem.disconnect(
+                    this.autoSelectProfileMenuItemSignal
+                );
+                this.autoSelectProfileMenuItemSignal = null;
+                this.autoSelectProfileMenuItem.destroy();
+                this.autoSelectProfileMenuItem = null;
+            }
             // profiles menu items
             for (let profile in this.profilesMenuItems) {
-                this.profilesMenuItems[profile].item.disconnect(this.profilesMenuItems[profile].signal);
+                this.profilesMenuItems[profile].item.disconnect(
+                    this.profilesMenuItems[profile].signal
+                );
                 this.profilesMenuItems[profile].item.destroy();
             }
             // label
-            this.topLabel.destroy();
-            this.topLabel = null;
+            if (this.topLabel) {
+                this.topLabel.destroy();
+                this.topLabel = null;
+            }
             // upper level container
-            this.box.destroy();
-            this.box = null;
+            if (this.box) {
+                this.box.destroy();
+                this.box = null;
+            }
             super.destroy();
         }
 });

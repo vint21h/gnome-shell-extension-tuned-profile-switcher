@@ -19,7 +19,7 @@ class Extension {
      */
     constructor () {
         log(`[${This.metadata.name}]: initializing`);
-        this._tuned = new This.imports.dbus.TunedProxyAdapter();
+        this._tuned = null;
         this._widget = null;
     }
 
@@ -28,6 +28,7 @@ class Extension {
      */
     enable () {
         log(`[${This.metadata.name}]: enabling`);
+        this._tuned = new This.imports.dbus.TunedProxyAdapter();
         this._widget = new This.imports.widget.TunedProfileSwitcherWidget(this._tuned);
         Main.panel.addToStatusArea(
             "TunedProfileSwitcherWidget",
@@ -40,8 +41,14 @@ class Extension {
      */
     disable () {
         log(`[${This.metadata.name}]: disabling`);
-        this._widget.destroy();
-        this._widget = null;
+        if (this._tuned) {
+            this._tuned.destroy();
+            this._tuned = null;
+        }
+        if (this._widget) {
+            this._widget.destroy();
+            this._widget = null;
+        }
     }
 }
 

@@ -39,6 +39,4 @@ parts
 *.pid
 .credentials
 .env
-node_modules/*
-package-lock.json
 Pipfile.lock

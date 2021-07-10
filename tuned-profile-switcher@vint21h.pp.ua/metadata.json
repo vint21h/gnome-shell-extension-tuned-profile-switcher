@@ -1,10 +1,11 @@
 {
-  "name" : "TuneD Profile Switcher",
-  "description" : "Displays a list of the TuneD profiles and allows to switch between them.",
-  "shell-version" : [
-      "40"
+  "name": "TuneD Profile Switcher",
+  "description": "Displays a list of the TuneD profiles and allows to switch between them.",
+  "shell-version": [
+    "40"
   ],
-  "url" : "https://github.com/vint21h/gnome-shell-extension-tuned-profile-switcher/",
-  "uuid" : "tuned-profile-switcher@vint21h.pp.ua",
-  "version" : 0
+  "url": "https://github.com/vint21h/gnome-shell-extension-tuned-profile-switcher/",
+  "uuid": "tuned-profile-switcher@vint21h.pp.ua",
+  "version": 0,
+  "gettext-domain": "tuned-profile-switcher"
 }
