@@ -13,8 +13,8 @@ Contents
 * [Contacts](#contacts)
 
 ## Installation
-[//]: # (TODO: provide real link to EGO.)
-[![EGO](docs/images/get-it-on-ego.svg)](https://github.com/vint21h/gnome-shell-extension-tuned-profile-switcher/)
+[//]: # (TODO: provide real link to EGO after publishing.)
+[<img src="https://github.com/vint21h/gnome-shell-extension-tuned-profile-switcher/raw/master/docs/images/get-it-on-ego.svg" height="100">](https://github.com/vint21h/gnome-shell-extension-tuned-profile-switcher/)
 
 ## Licensing
 gnome-shell-extension-tuned-profile-switcher is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
