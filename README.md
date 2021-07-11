@@ -1,6 +1,7 @@
 [//]: # (gnome-shell-extension-tuned-profile-switcher)
 [//]: # (README.md)
 
+
 # A gnome-shell-extension-tuned-profile-switcher documentation
 
 *gnome-shell-extension-tuned-profile-switcher is a [GNOME Shell](https://wiki.gnome.org/Projects/GnomeShell) [TuneD](https://tuned-project.org/) profile switcher extension*

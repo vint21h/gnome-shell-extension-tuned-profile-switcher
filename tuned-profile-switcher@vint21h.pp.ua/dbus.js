@@ -14,7 +14,7 @@ const Gio = imports.gi.Gio,
 /**
  * TuneD DBus proxy adapter.
  */
-class TunedProxyAdapter {
+var TunedProxyAdapter = class {
 
     /**
      * Adapter constructor.
