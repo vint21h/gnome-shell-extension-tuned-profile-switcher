@@ -4,10 +4,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: tuned-profile-switcher 0.0.0\n"
+"Project-Id-Version: tuned-profile-switcher 3.0.0\n"
 "Report-Msgid-Bugs-To: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
 "POT-Creation-Date: 2021-06-30 04:09+0300\n"
-"PO-Revision-Date: 2021-06-30 04:09+0300\n"
+"PO-Revision-Date: 2021-11-08 20:17+0300\n"
 "Last-Translator: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
 "Language-Team: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
 "Language: en\n"
